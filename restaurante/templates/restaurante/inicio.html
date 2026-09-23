@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio Digital</title>
+</head>
+<body>
+
+
+{% extends 'base.html' %}
+
+{% block conteudo %}
+
+<div class="inicio">
+
+    <h2>🍽️ Bem-vindo ao Cardápio Digital</h2>
+
+    <p>
+        Gerencie mesas, pratos, combos e comandas
+        de forma simples e organizada.
+    </p>
+
+    <div class="opcoes">
+
+        <div class="opcao">
+            <div class="icone">🪑</div>
+
+            <h3>Mesas</h3>
+
+            <p>
+                Consulte as mesas e veja quais estão
+                livres ou ocupadas.
+            </p>
+
+            <a class="botao" href="{% url 'lista_mesas' %}">
+                Ver Mesas
+            </a>
+        </div>
+
+
+        <div class="opcao">
+            <div class="icone">🍽️</div>
+
+            <h3>Pratos</h3>
+
+            <p>
+                Consulte os pratos disponíveis
+                no restaurante.
+            </p>
+
+            <a class="botao" href="{% url 'lista_pratos' %}">
+                Ver Pratos
+            </a>
+        </div>
+
+
+        <div class="opcao">
+            <div class="icone">🍔</div>
+
+            <h3>Combos</h3>
+
+            <p>
+                Confira os combos disponíveis
+                no cardápio.
+            </p>
+
+            <a class="botao" href="{% url 'lista_combos' %}">
+                Ver Combos
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+</body>
+</html>

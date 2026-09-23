@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+{% extends 'base.html' %}
+
+{% block conteudo %}
+
+<h2>🪑 Mesas</h2>
+
+<p>
+    Consulte o estado atual das mesas do restaurante.
+</p>
+
+<div class="cards">
+
+    {% for mesa in mesas %}
+
+        <div class="card">
+
+            <h3>🪑 Mesa {{ mesa.numero }}</h3>
+
+            {% if mesa.status == 'LIVRE' %}
+
+                <p>
+                    <strong>🟢 Mesa Livre</strong>
+                </p>
+
+            {% elif mesa.status == 'OCUPADA' %}
+
+                <p>
+                    <strong>🔴 Mesa Ocupada</strong>
+                </p>
+
+            {% endif %}
+
+            <a class="botao"
+               href="{% url 'abrir_comanda' mesa.id %}">
+                🧾 Abrir / Ver Comanda
+            </a>
+
+        </div>
+
+    {% empty %}
+
+        <p>Nenhuma mesa cadastrada.</p>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+
+<h2>🍽️ {{ titulo }}</h2>
+
+<form method="post" class="formulario">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit" class="botao">💾 Salvar</button>
+    <a href="{% url 'lista_pratos' %}" class="botao">Cancelar</a>
+</form>
+
+{% endblock %}

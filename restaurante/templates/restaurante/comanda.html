@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+{% extends 'base.html' %}
+
+{% block conteudo %}
+
+<div class="cabecalho-comanda">
+
+    <h2>🧾 Comanda - Mesa {{ mesa.numero }}</h2>
+
+    <p>
+        <strong>Status:</strong>
+        {% if comanda.status == 'ABERTA' %}
+            🟢 Aberta
+        {% else %}
+            🔴 Fechada
+        {% endif %}
+    </p>
+
+    <p>
+        <strong>Data de abertura:</strong>
+        {{ comanda.data_abertura }}
+    </p>
+
+</div>
+
+<hr>
+
+<h2>🍽️ Adicionar Pratos</h2>
+
+<div class="cards">
+
+    {% for prato in pratos %}
+
+        <div class="card">
+
+            <h3>{{ prato.nome }}</h3>
+
+            <p>{{ prato.descricao }}</p>
+
+            <p class="preco">
+                R$ {{ prato.preco }}
+            </p>
+
+            <a class="botao"
+               href="{% url 'adicionar_prato' comanda.id prato.id %}">
+                ➕ Adicionar
+            </a>
+
+        </div>
+
+    {% empty %}
+
+        <p>Nenhum prato disponível.</p>
+
+    {% endfor %}
+
+</div>
+
+<hr>
+
+<h2>🍔 Adicionar Combos</h2>
+
+<div class="cards">
+
+    {% for combo in combos %}
+
+        <div class="card">
+
+            <h3>{{ combo.nome }}</h3>
+
+            <p>{{ combo.descricao }}</p>
+
+            <p class="preco">
+                R$ {{ combo.preco }}
+            </p>
+
+            <a class="botao"
+               href="{% url 'adicionar_combo' comanda.id combo.id %}">
+                ➕ Adicionar
+            </a>
+
+        </div>
+
+    {% empty %}
+
+        <p>Nenhum combo disponível.</p>
+
+    {% endfor %}
+
+</div>
+
+<hr>
+
+<div class="resumo-comanda">
+
+    <h2>📋 Itens da Comanda</h2>
+
+    {% if itens %}
+
+        <ul>
+
+            {% for item in itens %}
+
+                <li>
+
+    {% if item.prato %}
+        <strong>
+            {{ item.quantidade }}x {{ item.prato.nome }}
+        </strong>
+
+        <span>
+            R$ {{ item.prato.preco }}
+        </span>
+
+    {% elif item.combo %}
+
+        <strong>
+            {{ item.quantidade }}x {{ item.combo.nome }}
+        </strong>
+
+        <span>
+            R$ {{ item.combo.preco }}
+        </span>
+
+    {% endif %}
+
+    <a class="botao-remover"
+       href="{% url 'remover_item' item.id %}">
+        ➖ Remover
+    </a>
+
+</li>
+
+            {% endfor %}
+
+        </ul>
+
+    {% else %}
+
+        <p>Nenhum item adicionado ainda.</p>
+
+    {% endif %}
+
+    <h2 class="total">
+        💰 Total: R$ {{ total }}
+    </h2>
+
+    <a class="botao-fechar"
+       href="{% url 'fechar_comanda' comanda.id %}">
+        ✅ Fechar Conta
+    </a>
+
+</div>
+
+{% endblock %}
+
+</body>
+</html>

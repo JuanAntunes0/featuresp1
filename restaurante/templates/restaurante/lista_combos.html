@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+{% extends 'base.html' %}
+
+{% block conteudo %}
+
+<h2>🍔 Combos</h2>
+
+<p>
+    Confira os combos disponíveis no cardápio.
+</p>
+
+<div class="cards">
+
+    {% for combo in combos %}
+
+        <div class="card">
+
+            <h3>{{ combo.nome }}</h3>
+
+            <p>
+                {{ combo.descricao }}
+            </p>
+
+            <p class="preco">
+                R$ {{ combo.preco }}
+            </p>
+
+            {% if combo.disponivel %}
+                <p>🟢 Disponível</p>
+            {% else %}
+                <p>🔴 Indisponível</p>
+            {% endif %}
+
+        </div>
+
+    {% empty %}
+
+        <p>Nenhum combo cadastrado.</p>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}
+
+</body>
+</html>
