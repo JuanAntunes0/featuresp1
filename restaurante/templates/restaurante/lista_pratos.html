@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+
+<h2>🍽️ Pratos</h2>
+
+<p>Confira os pratos cadastrados no cardápio.</p>
+
+<div class="filtros">
+    <form method="get">
+        <label for="q">Buscar prato:</label>
+        <input
+            type="text"
+            id="q"
+            name="q"
+            placeholder="Digite o nome do prato"
+            value="{{ request.GET.q }}"
+        >
+
+        <label for="categoria">Categoria:</label>
+        <select id="categoria" name="categoria">
+            <option value="">Todas as categorias</option>
+            {% for valor, nome in categorias %}
+                <option value="{{ valor }}" {% if request.GET.categoria == valor %}selected{% endif %}>
+                    {{ nome }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <button type="submit" class="botao">Buscar / Filtrar</button>
+        <a href="{% url 'lista_pratos' %}" class="botao">Limpar</a>
+    </form>
+</div>
+
+<p>
+    <a class="botao" href="{% url 'criar_prato' %}">➕ Cadastrar prato</a>
+</p>
+
+<div class="cards">
+    {% for prato in pratos %}
+        <div class="card">
+            <h3>{{ prato.nome }}</h3>
+
+            <p><strong>Categoria:</strong> {{ prato.get_categoria_display }}</p>
+
+            <p>{{ prato.descricao }}</p>
+
+            <p class="preco">R$ {{ prato.preco }}</p>
+
+            {% if prato.disponivel %}
+                <p>🟢 Disponível</p>
+            {% else %}
+                <p>🔴 Indisponível</p>
+            {% endif %}
+
+            <a class="botao" href="{% url 'editar_prato' prato.id %}">✏️ Editar</a>
+            <a class="botao-remover" href="{% url 'excluir_prato' prato.id %}">🗑️ Excluir</a>
+        </div>
+    {% empty %}
+        <p>Nenhum prato encontrado para os filtros informados.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}
